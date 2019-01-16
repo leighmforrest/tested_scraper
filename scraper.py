@@ -22,8 +22,11 @@ class Chart(Scraper):
         """Get a date string. Returned string does not conform to Python's formatting."""
         self.get_soup()
         date = self.soup.findAll("button", {"class": "chart-detail-header__date-selector-button"})
-        date = self.get_text(date)
-        return date
+        date = self.get_text(date).title().split()
+        date_number = int(date[1][:-1])
+        if date_number < 10:
+            date[1] = f'0{date_number},'
+        return ' '.join(date)
 
     def get_next_weeks_link(self):
         """Get the link for the following week."""

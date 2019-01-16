@@ -42,7 +42,7 @@ def test_chart_date(chart, webpage):
     with mock.patch('requests.get') as m:
         m.return_value.text = webpage
         date = chart.get_date()
-        assert date == 'january 19, 2019'
+        assert date == 'January 19, 2019'
 
 
 def test_current_weeks_chart_has_no_next_week(chart, webpage):
@@ -59,6 +59,14 @@ def test_get_chart_topper(chart, webpage):
         assert 'post malone' in topper['artist']
         assert 'sunflower (spider-man: into the spider-verse)' == topper['title']
         assert 1 == topper['rank']
+
+
+def test_previous_chart_date(chart, previous_webpage):
+    """Billboard has the date as 'January 05, 2019''"""
+    with mock.patch('requests.get') as m:
+        m.return_value.text = previous_webpage
+        date = chart.get_date()
+        assert date == 'January 05, 2019'
 
 
 def test_previous_weeks_chart_has_next_week(chart, previous_webpage):
